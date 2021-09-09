@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+
+  continuous-jdbc-checker:
+    image: ${REG}continuous-jdbc-checker:${BUILD_TAG}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ${PWD}/ojdbc8-18.3.0.0.jar:/tmp/ojdbc8-18.3.0.0.jar:ro
+    environment:
+      - JDBC_JAR_PATH=/tmp/ojdbc8-18.3.0.0.jar
+      - JDBC_CONNECT_USER=user
+      - JDBC_CONNECT_PASSWORD=password
+      - JDBC_CONNECTION_STRING=jdbc:oracle:thin:@//host:port/XEPDB1
+      - RETRY_INTERVAL=30
